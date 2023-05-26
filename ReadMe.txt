@@ -1,0 +1,1 @@
+to run simply open the solution and run via Visual Studios

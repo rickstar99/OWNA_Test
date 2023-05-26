@@ -1,0 +1,85 @@
+﻿@model AuthorBookData
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h1>Books</h1>
+
+<form method="get" action="/Home/Search">
+    <div class="form-group">
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="search" required/>
+        <button class="btn-primary btn">Search</button>
+    </div>
+
+</form>
+
+<div class="row mt-4">
+    <div class="col">
+        <table class="table">
+            <thead>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>CoverImageUrl</th>
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Books)
+                {
+                    <tr>
+                        <td>@book.Id</td>
+                        <td>@book.Title</td>
+                        @foreach (var author in book.Authors)
+                        {
+                            <td>@author.name</td>
+                        }
+                        <td>@book.Description</td>
+                        <td><img src=@book.CoverImageUrl></td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h3> Add Author</h3>
+<form method="post" action="/Home/CreateAuthor">
+    <div class="form-group">
+        <label for="authorName">Author Name:</label>
+        <input type="text" id="authorName" name="authorName" required />
+        <button type="submit" class="btn-primary btn">Add Author</button>
+    </div>
+
+</form>
+
+
+<h3> Add Book</h3>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <form method="post" action="/Home/CreateBook">
+            <div class="form-group">
+                <label for="title">Book Title:</label>
+                <input type="text" id="title" name="title" required />
+
+                <label for="authors">Book Author:</label>
+                <select id="authors" name="authorIDs" multiple required>
+                    @foreach (var author in Model.Authors)
+                    {
+                        <option value="@author.Id">@author.name</option>
+                    }
+                </select>
+
+                <label for="description">Book Description:</label>
+                <input type="text" id="description" name="description" required />
+
+                <label for="imageUrl">Cover Image URL:</label>
+                <input type="text" id="imageUrl" name="imageUrl" required />
+
+            </div>
+            <button type="submit" class="btn-primary btn">Add Book</button>
+
+        </form>
+    </div>
+</div>
